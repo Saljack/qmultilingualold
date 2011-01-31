@@ -14,6 +14,7 @@ int main(int argc, char *argv[])
         }
         if(*i == "-h" || *i == "--help"){
             std::cout << "QMultilingual help" << std::endl;
+            std::cout << "Created by Saljack" << std::endl;
             std::cout << "--help, -h - this help page" << std::endl;
             std::cout << "--cli, -c - run without gui" << std::endl;
             return 0;
