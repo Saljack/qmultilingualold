@@ -21,12 +21,22 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #include "mainwindow.h"
 #include "multilingual_cli.h"
 
+const int LANGUAGE = 3; // Number of language
+
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
+
     bool cli = false;
+    int lanI = 0;
+    int num = -1;
+    //SET Language
+    Language* lan[LANGUAGE];
+    lan[0] = new English();
+    lan[1] = new Czech();
+    lan[2] = new Deutsch();
+
     QList<QString>::iterator i = a.arguments().begin();
-/*    ++i;*///test
     while(i != a.arguments().end()){
         if(*i == "-c" || *i == "--cli"){
             cli = true;
@@ -38,16 +48,66 @@ int main(int argc, char *argv[])
             std::cout << "  --cli, -c \trun without gui" << std::endl;
             return 0;
         }
+
+        if(*i == "-l"){
+            ++i;
+            if(i == a.arguments().end()){
+                std::cout << "Wrong syntax. After -l must be language id." << std::endl <<" Now it is implemented: " << std::endl;
+                for(int z=0; z< LANGUAGE; ++z){
+                    std::cout << lan[z]->getId() << " - " << lan[z]->getNameLanguage() << endl;
+                }
+                return 0;
+            }
+
+            QString l = i->toLower();
+
+            //Language
+            for(int z=0; z< LANGUAGE; ++z){
+                if(l == QString(lan[z]->getId().c_str())){
+                    lanI = z;
+                    break;
+                }
+            }
+
+            if(lanI == -1){
+                std::cout << "Wrong syntax. After -l must be language id." << std::endl <<"Now it is implemented: " << std::endl;
+                for(int z=0; z< LANGUAGE; ++z){
+                    std::cout << "\t" <<lan[z]->getId() << " - " << lan[z]->getNameLanguage() << endl;
+                }
+                return 0;
+            }
+        }
+
+        if(*i == "-n"){
+            ++i;
+            if(i == a.arguments().end()){
+                std::cout << "Wrong syntax. After -n must be integer." << std::endl;
+                return 0;
+            }
+            bool ok;
+            int n = i->toInt(&ok);
+            if(ok){
+                num = n;
+            }else{
+                std::cout << "Wrong syntax. After -n must be integer." << std::endl;
+                return 0;
+            }
+        }
+
         ++i;
     }
+
     if(cli){
-        Multilingual_cli cl;
-//        delete cl;
+        if(num != -1){
+            cout << lan[lanI]->getNumber(num) << endl;
+        }else{
+            Multilingual_cli cl;
+        }
         return 0;
     }
+
     MainWindow w;
     w.show();
 
     return a.exec();
-
 }

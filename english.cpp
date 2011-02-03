@@ -392,6 +392,6 @@ int English::getPre(string cislo)
  */
 string English::getNameLanguage()
 {
-    return "angličtině";
+    return "english";
 }
 

@@ -44,6 +44,7 @@ public:
     virtual int getNum(string cislo) = 0;
     string withOutSpace(string cislo);
     virtual string getNameLanguage() = 0;
+    string getId();
     //Staticke konstanty
     static const int MILION = 1000000;
     static const int TISIC = 1000;

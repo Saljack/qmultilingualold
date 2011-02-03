@@ -32,7 +32,7 @@ Czech::Czech()
 
 Czech::Czech(const Czech& other)
 {
-
+    //TODO
 }
 
 Czech::~Czech()
@@ -479,7 +479,7 @@ int Czech::getPre(string cislo)
  */
 string Czech::getNameLanguage()
 {
-    return "češtině";
+    return "czech";
 }
 
 

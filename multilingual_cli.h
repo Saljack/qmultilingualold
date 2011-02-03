@@ -37,7 +37,6 @@ class Multilingual_cli
 
 public:
     Multilingual_cli();
-    Multilingual_cli(const Multilingual_cli& other);
     virtual ~Multilingual_cli();
     void start();
 };

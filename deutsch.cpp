@@ -31,7 +31,7 @@ Deutsch::Deutsch() {
 }
 
 Deutsch::Deutsch ( const Deutsch& other ) {
-
+    //TODO
 }
 
 Deutsch::~Deutsch() {
@@ -314,7 +314,7 @@ int Deutsch::getNumDesitky(string cislo){
  */
 string Deutsch::getNameLanguage()
 {
-    return "němčině";
+    return "deutch";
 }
 
 
