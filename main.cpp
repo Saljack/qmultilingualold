@@ -94,6 +94,9 @@ int main(int argc, char *argv[])
             }
         }
 
+        if(*i == "-t"){
+            cout << "Nasleduje text";
+        }
         ++i;
     }
 
