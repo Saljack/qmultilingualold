@@ -16,13 +16,15 @@ SOURCES += main.cpp\
     multilingual_cli.cpp \
     english.cpp \
     deutsch.cpp \
-    czech.cpp
+    czech.cpp \
+    french.cpp
 
 HEADERS  += mainwindow.h \
     language.h \
     multilingual_cli.h \
     english.h \
     deutsch.h \
-    czech.h
+    czech.h \
+    french.h
 
 FORMS    += mainwindow.ui

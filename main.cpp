@@ -30,14 +30,18 @@ int main(int argc, char *argv[])
     bool cli = false;
     int lanI = 0;
     int num = -1;
+    QString text;
     //SET Language
     Language* lan[LANGUAGE];
     lan[0] = new English();
     lan[1] = new Czech();
     lan[2] = new Deutsch();
+    QList<QString> argumenty = a.arguments();
 
-    QList<QString>::iterator i = a.arguments().begin();
-    while(i != a.arguments().end()){
+    QList<QString>::iterator i = argumenty.begin();
+
+
+    while(i != argumenty.end()){
         if(*i == "-c" || *i == "--cli"){
             cli = true;
         }
@@ -51,14 +55,13 @@ int main(int argc, char *argv[])
 
         if(*i == "-l"){
             ++i;
-            if(i == a.arguments().end()){
+            if(i == argumenty.end()){
                 std::cout << "Wrong syntax. After -l must be language id." << std::endl <<" Now it is implemented: " << std::endl;
                 for(int z=0; z< LANGUAGE; ++z){
                     std::cout << lan[z]->getId() << " - " << lan[z]->getNameLanguage() << endl;
                 }
                 return 0;
             }
-
             QString l = i->toLower();
 
             //Language
@@ -80,7 +83,7 @@ int main(int argc, char *argv[])
 
         if(*i == "-n"){
             ++i;
-            if(i == a.arguments().end()){
+            if(i == argumenty.end()){
                 std::cout << "Wrong syntax. After -n must be integer." << std::endl;
                 return 0;
             }
@@ -95,14 +98,44 @@ int main(int argc, char *argv[])
         }
 
         if(*i == "-t"){
-            cout << "Nasleduje text";
+
+            cli = true;
+            ++i;
+            if( i == argumenty.end()){
+                cout << "Wrong syntax. After -t must be string." << endl;
+                return 0;
+            }
+            if((*i).at(0) == '"'){
+                cout << "Wrong syntax. To help run qmultilingual --help." << endl;
+                return 0;
+            }
+            text = *i;
+            ++i;
+            while( i != argumenty.end()){
+                if((*i).at(0) == '-'){
+                    break;
+                }
+                text += " " + *i;
+                ++i;
+            }
+            --i;
+
+
         }
+
         ++i;
     }
 
     if(cli){
         if(num != -1){
             cout << lan[lanI]->getNumber(num) << endl;
+        }else if(!text.isEmpty()){
+            int nbr = lan[lanI]->getNum(text.toUtf8().data());
+            if(nbr >= 0){
+                cout <<  nbr << endl;
+            } else {
+                cout << text.toStdString() << " is not number." << endl;
+            }
         }else{
             Multilingual_cli cl;
         }
