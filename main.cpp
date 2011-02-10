@@ -23,6 +23,10 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
 const int LANGUAGE = 3; // Number of language
 
+
+/**
+  UTF 8
+  */
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
@@ -50,9 +54,13 @@ int main(int argc, char *argv[])
             std::cout << "Created by Saljack" << std::endl;
             std::cout << "  --help, -h \tthis help page" << std::endl;
             std::cout << "  --cli, -c \trun without gui" << std::endl;
+            std::cout << "  -l [EN|DE|CZ]\tlanguage default is English. If it is run without next arguemt, it will write list of language." << std::endl;
+            std::cout << "  -n NUMBER \tNUMBER must be integer and >= 0. Return string of number in chosen language." << std::endl;
+            std::cout << "  -t STRING \tSTRING must be string and >= 0. Return integer number of string in chosen language." << std::endl;
             return 0;
         }
 
+        //Language
         if(*i == "-l"){
             ++i;
             if(i == argumenty.end()){
@@ -81,6 +89,7 @@ int main(int argc, char *argv[])
             }
         }
 
+        //Number
         if(*i == "-n"){
             ++i;
             if(i == argumenty.end()){
@@ -97,6 +106,7 @@ int main(int argc, char *argv[])
             }
         }
 
+        //Text
         if(*i == "-t"){
 
             cli = true;
@@ -134,7 +144,7 @@ int main(int argc, char *argv[])
             if(nbr >= 0){
                 cout <<  nbr << endl;
             } else {
-                cout << text.toStdString() << " is not number." << endl;
+                cout << text.toUtf8().data() << " is not number in " << lan[lanI]->getNameLanguage() << endl;
             }
         }else{
             Multilingual_cli cl;
