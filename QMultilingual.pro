@@ -6,9 +6,9 @@
 
 QT       += core gui
 
-TARGET = QMultilingual
+TARGET = qmultilingual
 TEMPLATE = app
-
+CONFIG += console
 
 SOURCES += main.cpp\
         mainwindow.cpp \
@@ -17,7 +17,8 @@ SOURCES += main.cpp\
     english.cpp \
     deutsch.cpp \
     czech.cpp \
-    french.cpp
+    french.cpp \
+    settingsdialog.cpp
 
 HEADERS  += mainwindow.h \
     language.h \
@@ -25,6 +26,8 @@ HEADERS  += mainwindow.h \
     english.h \
     deutsch.h \
     czech.h \
-    french.h
+    french.h \
+    settingsdialog.h
 
-FORMS    += mainwindow.ui
+FORMS    += mainwindow.ui \
+    settingsdialog.ui

@@ -22,6 +22,8 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
 #include <QMainWindow>
 #include "language.h"
+#include <QSystemTrayIcon>
+#include <QSettings>
 
 namespace Ui {
     class MainWindow;
@@ -34,6 +36,7 @@ class MainWindow : public QMainWindow
 public:
     explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();
+    QSettings* getSettings();
 
 protected:
     void changeEvent(QEvent *e);
@@ -53,6 +56,8 @@ private slots:
 private:
     Ui::MainWindow *ui;
     Language* lan[3];
+    QSystemTrayIcon* tray;
+    QSettings settings;
 
 };
 

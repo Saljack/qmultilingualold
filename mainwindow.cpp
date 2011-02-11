@@ -24,13 +24,17 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #include "deutsch.h"
 #include <QTextEdit>
 #include <iostream>
+#include "settingsdialog.h"
+#include <QDebug>
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
-    ui->actionSettings->setEnabled(false); //Zatim neni co nastavovat
+//    ui->actionSettings->setEnabled(false); //Zatim neni co nastavovat
+    qDebug() << settings.value("SystemTray").toBool();
+    qDebug() << settings.value("Remember").toBool();
     lan[0] = new English();
     lan[1] = new Czech();
     lan[2] = new Deutsch();
@@ -42,10 +46,27 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(ui->chbEn,SIGNAL(clicked()), this, SLOT(spbNum_changed()));
     connect(ui->chbCz,SIGNAL(clicked()), this, SLOT(spbNum_changed()));
     connect(ui->chbDe,SIGNAL(clicked()), this, SLOT(spbNum_changed()));
+    ui->chbEn->setChecked(settings.value("EN").toBool());
+    ui->chbDe->setChecked(settings.value("DE").toBool());
+    ui->chbCz->setChecked(settings.value("CZ").toBool());
+    qDebug() << "EN" << settings.value("EN").toBool();
+    qDebug() << "DE" << settings.value("DE").toBool();
+    qDebug() << "CZ" << settings.value("CZ").toBool();
+    ui->spbNum->setValue(settings.value("number").toInt());
+    spbNum_changed();
 }
 
 MainWindow::~MainWindow()
 {
+    if(settings.value("Remember").toBool() == true){
+        settings.setValue("EN", ui->chbEn->isChecked());
+        settings.setValue("DE", ui->chbDe->isChecked());
+        settings.setValue("CZ", ui->chbCz->isChecked());
+        settings.setValue("number", ui->spbNum->value());
+    }
+    qDebug() << "EN" << settings.value("EN").toBool();
+    qDebug() << "DE" << settings.value("DE").toBool();
+    qDebug() << "CZ" << settings.value("CZ").toBool();
     for(int i=0; i<3; ++i){
         delete lan[i];
     }
@@ -108,7 +129,13 @@ void MainWindow::on_actionAbout_Qt_triggered()
 
 void MainWindow::on_actionSettings_triggered()
 {
- //TODO
+    SettingsDialog stg(this, &settings);
+    int res = stg.exec();
+    if(res == QDialog::Accepted){
+        settings.setValue("SystemTray", stg.isTray());
+        settings.setValue("Remember", stg.isRemembered());
+    }
+
 }
 
 void MainWindow::on_actionExit_triggered()
@@ -125,4 +152,7 @@ void MainWindow::on_actionAbout_QMultilingual_triggered()
        about->setText("<h1>About QMultilingual</h1> By Saljack (saljacky@gmail.com)<br/> <b>Version:</b> 0.1-pre-alpha");
        about->setReadOnly(true);
        about->show();
+}
+QSettings* MainWindow::getSettings(){
+    return &settings;
 }
