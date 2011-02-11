@@ -57,6 +57,7 @@ int main(int argc, char *argv[])
             std::cout << "  -l [EN|DE|CZ]\tlanguage default is English. If it is run without next arguemt, it will write list of language." << std::endl;
             std::cout << "  -n NUMBER \tNUMBER must be integer and >= 0. Return string of number in chosen language." << std::endl;
             std::cout << "  -t STRING \tSTRING must be string and >= 0. Return integer number of string in chosen language." << std::endl;
+
             return 0;
         }
 
