@@ -30,6 +30,8 @@ const int LANGUAGE = 3; // Number of language
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
+    a.setApplicationName("QMultilingual");
+    a.setOrganizationName("Saljack");
 
     bool cli = false;
     int lanI = 0;

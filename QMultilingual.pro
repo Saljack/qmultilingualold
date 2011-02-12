@@ -7,6 +7,7 @@
 QT       += core gui
 
 TARGET = qmultilingual
+target.path = /usr/local/qmul
 TEMPLATE = app
 CONFIG += console
 
@@ -18,7 +19,8 @@ SOURCES += main.cpp\
     deutsch.cpp \
     czech.cpp \
     french.cpp \
-    settingsdialog.cpp
+    settingsdialog.cpp \
+    about.cpp
 
 HEADERS  += mainwindow.h \
     language.h \
@@ -27,7 +29,16 @@ HEADERS  += mainwindow.h \
     deutsch.h \
     czech.h \
     french.h \
-    settingsdialog.h
+    settingsdialog.h \
+    about.h
 
 FORMS    += mainwindow.ui \
-    settingsdialog.ui
+    settingsdialog.ui \
+    about.ui
+
+RESOURCES += \
+    resource.qrc
+
+
+INSTALLS += target
+

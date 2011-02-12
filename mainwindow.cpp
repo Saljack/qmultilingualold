@@ -26,15 +26,17 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #include <iostream>
 #include "settingsdialog.h"
 #include <QDebug>
+#include "about.h"
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
-//    ui->actionSettings->setEnabled(false); //Zatim neni co nastavovat
-    qDebug() << settings.value("SystemTray").toBool();
-    qDebug() << settings.value("Remember").toBool();
+    qApp->setWindowIcon(QIcon(":/logo"));
+    //    ui->actionSettings->setEnabled(false); //Zatim neni co nastavovat
+//    qDebug() << settings.value("SystemTray").toBool();    //DBG
+//    qDebug() << settings.value("Remember").toBool();      //DBG
     lan[0] = new English();
     lan[1] = new Czech();
     lan[2] = new Deutsch();
@@ -49,9 +51,9 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->chbEn->setChecked(settings.value("EN").toBool());
     ui->chbDe->setChecked(settings.value("DE").toBool());
     ui->chbCz->setChecked(settings.value("CZ").toBool());
-    qDebug() << "EN" << settings.value("EN").toBool();
-    qDebug() << "DE" << settings.value("DE").toBool();
-    qDebug() << "CZ" << settings.value("CZ").toBool();
+//    qDebug() << "EN" << settings.value("EN").toBool();  //DBG
+//    qDebug() << "DE" << settings.value("DE").toBool();  //DBG
+//    qDebug() << "CZ" << settings.value("CZ").toBool();  //DBG
     ui->spbNum->setValue(settings.value("number").toInt());
     spbNum_changed();
 }
@@ -64,9 +66,9 @@ MainWindow::~MainWindow()
         settings.setValue("CZ", ui->chbCz->isChecked());
         settings.setValue("number", ui->spbNum->value());
     }
-    qDebug() << "EN" << settings.value("EN").toBool();
-    qDebug() << "DE" << settings.value("DE").toBool();
-    qDebug() << "CZ" << settings.value("CZ").toBool();
+//    qDebug() << "EN" << settings.value("EN").toBool();
+//    qDebug() << "DE" << settings.value("DE").toBool();
+//    qDebug() << "CZ" << settings.value("CZ").toBool();
     for(int i=0; i<3; ++i){
         delete lan[i];
     }
@@ -145,13 +147,8 @@ void MainWindow::on_actionExit_triggered()
 
 void MainWindow::on_actionAbout_QMultilingual_triggered()
 {
-    //Predelat na samotnou tridu
-       QTextEdit* about = new QTextEdit();
-       about->setWindowFlags(Qt::Tool);
-       about->setWindowModality(Qt::ApplicationModal);
-       about->setText("<h1>About QMultilingual</h1> By Saljack (saljacky@gmail.com)<br/> <b>Version:</b> 0.1-pre-alpha");
-       about->setReadOnly(true);
-       about->show();
+    About ab;
+    ab.exec();
 }
 QSettings* MainWindow::getSettings(){
     return &settings;
